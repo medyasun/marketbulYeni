@@ -268,6 +268,6 @@ sonuclar.sort(function(a, b) {
 });
 //#endregion Pages-Sonuclar
 
-const port = process.env.port || 8080;
-app.listen(port);
+var PORT = process.env.port || 8080;
+app.listen(PORT);
 
