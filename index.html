@@ -9,32 +9,42 @@
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="server.js"></script>
+  
 </head>
 
 <body>
   <div class="container-fluid">
     <div class="row">
       <div class="col-xs-6 col-md-6 col-lg-6 p-3">
+        <form method='POST' action='/sonuclar'>
         <div class="input-group mb-3">
-          <input id="urunara" type="text" class="form-control" placeholder="Aranacak Urun" aria-label="Aranacak Urun"
+          <input id="urunara" type="text" name="kelime" class="form-control"  placeholder="Aranacak Urun" aria-label="Aranacak Urun"
             aria-describedby="button-addon2">
-          
           <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="arama()">Ara</button>
+            <input class="btn btn-outline-secondary" type="submit" value='Ara' id="button-addon2"></input>
           </div>
         </div>
+      </form>
       </div>
     </div>
-    <div id="butondeger"></div>
+    <input class="btn btn-outline-secondary" type="button" onclick="sepeteEkle()" value='Ekle' id="button-addon3"></input>
+    <div id="sirali_sepet">Sepetiniz Boş</div>
+    <br>
+    <div id="topluSepet">TOPLU SEPET BOŞ</div>
+
+    
   </div>
 
 
   <script>
     var sepet = [];
-    sepet = --- datagonder-- -;
-    document.getElementById("butondeger").innerHTML = JSON.stringify(sepet);
+    sepet = ---datagonder---;
+    document.getElementById("sirali_sepet").innerHTML = sepet[0].site + ' - ' + sepet[0].name + ' - ' + sepet[0].Price + ' TL';
+    sessionStorage.setItem('sepetTmp', sessionStorage.getItem('sepetTmp') + '<br>' + sepet[0].site + ' - ' + sepet[0].name + ' - ' + sepet[0].Price + ' TL');
+    document.getElementById("topluSepet").innerHTML = sessionStorage.getItem('sepetTmp');
   </script>
+
+
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
