@@ -27,10 +27,12 @@
       </form>
       </div>
     </div>
-    <input class="btn btn-outline-secondary" type="button" onclick="sepeteEkle()" value='Ekle' id="button-addon3"></input>
+   
+    <!--  <input class="btn btn-outline-secondary" type="button" onclick="sepeteEkle()" value='Ekle' id="button-addon3"></input>   -->
+    
     <div id="sirali_sepet"></div>
     <br>
-    <div id="topluSepet">TOPLU SEPET BOŞ</div>
+    <!--  <div id="topluSepet"></div>    -->
 
     
   </div>
@@ -41,12 +43,17 @@
     sepet = ---datagonder---;
 
     for (let i = 0; i < sepet.length; i++) {
+      var elem = document.createElement('img')
+      document.getElementById("sirali_sepet").appendChild(elem);
+      elem.setAttribute('src',sepet[i].logo);
       document.getElementById("sirali_sepet").innerHTML += sepet[i].site + ' - ' + sepet[i].name + ' - ' + sepet[i].Price + ' TL'+'<br>';
     }
-
+    /*  
     sessionStorage.setItem('sepetTmp', sessionStorage.getItem('sepetTmp') + '<br>' + sepet[0].site + ' - ' + sepet[0].name + ' - ' + sepet[0].Price + ' TL');
-    document.getElementById("topluSepet").innerHTML = sessionStorage.getItem('sepetTmp');
+    document.getElementById("topluSepet").innerHTML = sessionStorage.getItem('sepetTmp')
+    */
   </script>
+  
 
 
 

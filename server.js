@@ -103,6 +103,7 @@ app.use('/sonuclar', (req, res) => {
 
       jsonSonuclar = {
         ID  : 1,
+        logo:"https://sanalmarket-com-web-assets.global.ssl.fastly.net/images/m.df813fa8.png",
         site: "migros",
         name: search,
         Price: parseFloat(fiyat.replace(",", "."), 10)
@@ -126,7 +127,7 @@ app.use('/sonuclar', (req, res) => {
     "body > main > div:nth-child(8) > div:nth-child(2) > div.col-xs-12.col-sm-12.col-md-9.col-lg-10 > div.pl-grid-cont.row > ul>li > div"
   );
 var urlE2L=urlElems2.length;
-  for (let i = 1; i <= urlE2L.length; i++) {
+  for (let i = 1; i <= urlE2L; i++) {
     search2 = $2(
       "body > main > div:nth-child(8) > div:nth-child(2) > div.col-xs-12.col-sm-12.col-md-9.col-lg-10 > div.pl-grid-cont.row > ul > li:nth-child(" +
         [i] +
@@ -150,6 +151,7 @@ var urlE2L=urlElems2.length;
 
     jsonSonuclar2 = {
       ID  : 2,
+      logo:"https://reimg-carrefour.mncdn.com/staticimage/favicon.ico",
       site: "carefour",
       name: search2,
       Price: parseFloat(fiyat2.replace(",", "."), 10)
@@ -197,6 +199,7 @@ for (let i = 1; i <= urlE3L; i++) {
 
   jsonSonuclar3 = {
     ID  : 3,
+    logo:"https://ayb.akinoncdn.com/static_omnishop/ayb288/assets/img/favicon.ico",
     site: "A101",
     name: search3,
     Price: parseFloat(fiyat3.replace(",", "."), 10)
@@ -247,6 +250,7 @@ for (let i = 1; i <= urlE5L; i++) {
 
   jsonSonuclar5 = {
     ID  : 5,
+    logo:"https://static.happycenter.com.tr/Uploads/favicon.PNG",
     site: "happycenter",
     name: search5,
     Price: parseFloat(fiyat5.replace(",", "."), 10)
@@ -297,6 +301,7 @@ for (let i = 1; i <= urlE4L; i++) {
 
   jsonSonuclar4 = {
     ID  : 4,
+    logo:"https://www.bim.com.tr/Uploads/logo.ico",
     site: "BİM Aktuel",
     name: search4,
     Price: parseFloat(fiyat4.replace(",", "."), 10)
@@ -329,6 +334,7 @@ for (let i = 1; i <= 5; i++) {      // ---------- eger sistemi yorarsa bu alani 
 }
 
 enucuzSonuclar=enucuzSonuclar.filter(function(sonuc) {return sonuc!=null;});
+
 
 //res.sendFile(path.join(__dirname, "index.html"));
     var data = fs.readFileSync('index.html').toString();
