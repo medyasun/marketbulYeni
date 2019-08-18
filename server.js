@@ -4,17 +4,17 @@ const session = require ('express-session');
 const cheerio = require("cheerio");
 const request = require("request-promise");
 const urlify = require("urlify").create({
-  addEToUmlauts: true,
-  szToSs: true,
+  addEToUmlauts: false,
+  szToSs: false,
   spaces: "+",
-  nonPrintable: "_",
+  nonPrintable: "",
   trim: true
 });
 const urlify3 = require ("urlify").create({
-  addEToUmlauts:true,
-  szToSs :true,
+  addEToUmlauts:false,
+  szToSs :false,
   spaces:"%26",
-  nonPrintable:"_",
+  nonPrintable:"",
   trim:true
 });
 const express = require("express");
@@ -42,11 +42,17 @@ app.use('/sonuclar', (req, res) => {
  
   (async () => {
     //#region tanimlar
-    var arama = req.body.kelime;
+/*     const capitalize = (s) => {
+      if (typeof s !== 'string') return ''
+      return s.charAt(0).toLocaleUpperCase('tr-TR') + s.slice(1)
+    } */
+    var arama = req.body.kelime.toLocaleLowerCase('tr-TR');
+    var aramaSplit=[];
+    aramaSplit=arama.split(' ');
     var urlarama = urlify(arama);
     const url = "https://www.migros.com.tr/arama?q="+urlarama;
-    const url2 ="https://www.carrefoursa.com/tr/search?q="+'"'+urlarama+'"'+"%3Arelevance%3AinStockFlag%3Atrue&show=All";
-    const url3 ="https://www.a101.com.tr/list/?search_text="+urlify3(arama)+"#/";
+    const url2 ="https://www.carrefoursa.com/tr/search?q="+urlarama+"%3Arelevance%3AinStockFlag%3Atrue&show=All";
+    const url3 ="https://www.a101.com.tr/list/?search_text="+urlarama+"#/";
     const url4 ="https://www.bim.com.tr/Categories/100/aktuel-urunler.aspx";
     const url5 = "https://www.happycenter.com.tr/Product/Search/?ara="+urlarama;
     const response = await request(url);
@@ -60,6 +66,9 @@ app.use('/sonuclar', (req, res) => {
     const $4 = cheerio.load(response4);
     const $5 = cheerio.load(response5);
     let sonuclar = [];
+    let sonuclartest = [];
+    let enucuzSonuclar=[];
+    let sonuclartmp=[];
     var jsonSonuclar = {},jsonSonuclar2 = {},jsonSonuclar3 = {}, jsonSonuclar4 = {},jsonSonuclar5 = {};
     let fiyat,fiyat2,fiyat3,fiyat4,fiyat5;
     let search,search2,search3,search4,search5;
@@ -92,11 +101,21 @@ app.use('/sonuclar', (req, res) => {
         .substr(-6);
 
       jsonSonuclar = {
+        ID  : 1,
         site: "migros",
         name: search,
         Price: parseFloat(fiyat.replace(",", "."), 10)
       };
-      if (jsonSonuclar.name.toLowerCase().includes(arama)) sonuclar.push(jsonSonuclar);
+
+      var aramaBirlestir;
+      for (let i = 0; i < aramaSplit.length; i++) {
+        if(i==0){ aramaBirlestir=jsonSonuclar.name.toLocaleLowerCase('tr-TR').includes(aramaSplit[i])+"&"}
+        else if(aramaSplit.length-1==i){  aramaBirlestir+=jsonSonuclar.name.toLocaleLowerCase('tr-TR').includes(aramaSplit[i])}
+        else { aramaBirlestir+=jsonSonuclar.name.toLocaleLowerCase('tr-TR').includes(aramaSplit[i])+"&"}
+      }
+      if (
+        !aramaBirlestir.includes('false')
+        ) sonuclar.push(jsonSonuclar);
     
     }
     //#endregion migros
@@ -128,12 +147,21 @@ app.use('/sonuclar', (req, res) => {
       .substr(-6);
 
     jsonSonuclar2 = {
+      ID  : 2,
       site: "carefour",
       name: search2,
       Price: parseFloat(fiyat2.replace(",", "."), 10)
     };
 
-    sonuclar.push(jsonSonuclar2);
+    var aramaBirlestir2;
+    for (let i = 0; i < aramaSplit.length; i++) {
+      if(i==0){ aramaBirlestir2=jsonSonuclar2.name.toLocaleLowerCase('tr-TR').includes(aramaSplit[i])+"&"}
+      else if(aramaSplit.length-1==i){  aramaBirlestir2+=jsonSonuclar2.name.toLocaleLowerCase('tr-TR').includes(aramaSplit[i])}
+      else { aramaBirlestir2+=jsonSonuclar2.name.toLocaleLowerCase('tr-TR').includes(aramaSplit[i])+"&"}
+    }
+    if (
+      !aramaBirlestir2.includes('false')
+      ) sonuclar.push(jsonSonuclar2);
   }
   //#endregion
     //---------------------------------------------------------------------------------------------------------------
@@ -165,17 +193,28 @@ for (let i = 1; i <= urlElems3.length; i++) {
     .substr(-6);
 
   jsonSonuclar3 = {
+    ID  : 3,
     site: "A101",
     name: search3,
     Price: parseFloat(fiyat3.replace(",", "."), 10)
   };
 
   if (isNaN(jsonSonuclar3.Price)) jsonSonuclar3.Price = 999 ;
-  sonuclar.push(jsonSonuclar3);
+
+  var aramaBirlestir3;
+  for (let i = 0; i < aramaSplit.length; i++) {
+    if(i==0){ aramaBirlestir3=jsonSonuclar3.name.toLocaleLowerCase('tr-TR').includes(aramaSplit[i])+"&"}
+    else if(aramaSplit.length-1==i){  aramaBirlestir3+=jsonSonuclar3.name.toLocaleLowerCase('tr-TR').includes(aramaSplit[i])}
+    else { aramaBirlestir3+=jsonSonuclar3.name.toLocaleLowerCase('tr-TR').includes(aramaSplit[i])+"&"}
+  }
+  if (
+    !aramaBirlestir3.includes('false')
+    ) sonuclar.push(jsonSonuclar3);
+
 }
 //#endregion
     //---------------------------------------------------------------------------------------------------------------
-    //#region happy center
+    //#region happy center 5
 const urlElems5 = $5(
   "#product-grid-list > div.panel-body > div> div"
 );
@@ -204,14 +243,24 @@ for (let i = 1; i <= urlElems5.length; i++) {
     .substr(-6);
 
   jsonSonuclar5 = {
+    ID  : 5,
     site: "happycenter",
     name: search5,
     Price: parseFloat(fiyat5.replace(",", "."), 10)
   };
 
-  
-  if (jsonSonuclar5.name.toLowerCase().includes(arama.toLowerCase())===true)  sonuclar.push(jsonSonuclar5);
- 
+  var aramaBirlestir5;
+  for (let i = 0; i < aramaSplit.length; i++) {
+    if(i==0){ aramaBirlestir5=jsonSonuclar5.name.toLocaleLowerCase('tr-TR').includes(aramaSplit[i])+"&"}
+    else if(aramaSplit.length-1==i){  aramaBirlestir5+=jsonSonuclar5.name.toLocaleLowerCase('tr-TR').includes(aramaSplit[i])}
+    else { aramaBirlestir5+=jsonSonuclar5.name.toLocaleLowerCase('tr-TR').includes(aramaSplit[i])+"&"}
+  }
+  if (
+    !aramaBirlestir5.includes('false')&& typeof jsonSonuclar5!="undefined"
+    ) {sonuclar.push(jsonSonuclar5)
+      sonuclartest.push(jsonSonuclar5)
+    };
+    
 }
 //#endregion
     //---------------------------------------------------------------------------------------------------------------
@@ -243,14 +292,24 @@ for (let i = 1; i <= urlElems4.length; i++) {
     .substr(-6);
 
   jsonSonuclar4 = {
+    ID  : 4,
     site: "BİM Aktuel",
     name: search4,
     Price: parseFloat(fiyat4.replace(",", "."), 10)
   };
 
   if (isNaN(jsonSonuclar4.Price)) jsonSonuclar4.Price = 999 ;
-  if (jsonSonuclar4.name.toLowerCase().includes(arama)) sonuclar.push(jsonSonuclar4) ;
-  //sonuclar.push(jsonSonuclar4);
+
+  var aramaBirlestir4;
+  for (let i = 0; i < aramaSplit.length; i++) {
+    if(i==0){ aramaBirlestir4=jsonSonuclar4.name.toLowerCase().includes(aramaSplit[i])+"&"}
+    else if(aramaSplit.length-1==i){  aramaBirlestir4+=jsonSonuclar4.name.toLowerCase().includes(aramaSplit[i])}
+    else { aramaBirlestir4+=jsonSonuclar4.name.toLowerCase().includes(aramaSplit[i])+"&"}
+  }
+  if (
+    !aramaBirlestir4.includes('false')
+    ) sonuclar.push(jsonSonuclar4);
+
 }
 //#endregion
     //---------------------------------------------------------------------------------------------------------------
@@ -258,10 +317,23 @@ sonuclar.sort(function(a, b) {
   return a.Price - b.Price;
 });
 
+for (let i = 1; i <= 5; i++) {      // ---------- eger sistemi yorarsa bu alani site adedi ile degistir
+ 
+  sonuclartmp=sonuclar.filter(function(sonuc) {return sonuc.ID == i;});
+  enucuzSonuclar.push(sonuclartmp[0]);
+  sonuclartest.push(sonuclartmp) ;
+}
 
-    //res.sendFile(path.join(__dirname, "index.html"));
+enucuzSonuclar=enucuzSonuclar.filter(function(sonuc) {return sonuc!=null;});
+console.log(url);
+console.log(url2);
+console.log(url3);
+console.log(url5);
+console.log(sonuclar.length);
+console.log(arama);
+//res.sendFile(path.join(__dirname, "index.html"));
     var data = fs.readFileSync('index.html').toString();
-    data = data.replace("---datagonder---",'['+JSON.stringify(sonuclar[0])+']' );
+    data = data.replace("---datagonder---",JSON.stringify(enucuzSonuclar) );
   
     res.send(data);
   })();                        //------------------async sonu

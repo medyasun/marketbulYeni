@@ -28,7 +28,7 @@
       </div>
     </div>
     <input class="btn btn-outline-secondary" type="button" onclick="sepeteEkle()" value='Ekle' id="button-addon3"></input>
-    <div id="sirali_sepet">Sepetiniz Boş</div>
+    <div id="sirali_sepet"></div>
     <br>
     <div id="topluSepet">TOPLU SEPET BOŞ</div>
 
@@ -39,7 +39,11 @@
   <script>
     var sepet = [];
     sepet = ---datagonder---;
-    document.getElementById("sirali_sepet").innerHTML = sepet[0].site + ' - ' + sepet[0].name + ' - ' + sepet[0].Price + ' TL';
+
+    for (let i = 0; i < sepet.length; i++) {
+      document.getElementById("sirali_sepet").innerHTML += sepet[i].site + ' - ' + sepet[i].name + ' - ' + sepet[i].Price + ' TL'+'<br>';
+    }
+
     sessionStorage.setItem('sepetTmp', sessionStorage.getItem('sepetTmp') + '<br>' + sepet[0].site + ' - ' + sepet[0].name + ' - ' + sepet[0].Price + ' TL');
     document.getElementById("topluSepet").innerHTML = sessionStorage.getItem('sepetTmp');
   </script>
