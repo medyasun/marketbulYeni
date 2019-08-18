@@ -325,12 +325,7 @@ for (let i = 1; i <= 5; i++) {      // ---------- eger sistemi yorarsa bu alani 
 }
 
 enucuzSonuclar=enucuzSonuclar.filter(function(sonuc) {return sonuc!=null;});
-console.log(url);
-console.log(url2);
-console.log(url3);
-console.log(url5);
-console.log(sonuclar.length);
-console.log(arama);
+
 //res.sendFile(path.join(__dirname, "index.html"));
     var data = fs.readFileSync('index.html').toString();
     data = data.replace("---datagonder---",JSON.stringify(enucuzSonuclar) );
