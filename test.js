@@ -49,7 +49,7 @@ app.use('/sonuclar', (req, res) => {
     var arama = req.body.kelime.toLocaleLowerCase('tr-TR');
     var aramaSplit=[];
     aramaSplit=arama.split(' ');
-    var aramaLength=aramaSplit.length;
+    aramaLength=aramaSplit.length;
     var urlarama = urlify(arama);
     const url = "https://www.migros.com.tr/arama?q="+urlarama;
     const url2 ="https://www.carrefoursa.com/tr/search?q="+urlarama+"%3Arelevance%3AinStockFlag%3Atrue&show=All";
@@ -75,12 +75,12 @@ app.use('/sonuclar', (req, res) => {
     let search,search2,search3,search4,search5;
     //#endregion
     //---------------------------------------------------------------------------------------------------------------
-    //#region migros 1
+    //#region migros
     const urlElems = $(
       "#page-area > div > div > div.col-md-10.category-right > div.sub-category-product-list > div"
     );
-    var urlEL=urlElems.length;
-    for (let i = 1; i <= urlEL; i++) {
+
+    for (let i = 1; i <= urlElems.length; i++) {
       search = $(
         "#page-area > div > div > div.col-md-10.category-right > div.sub-category-product-list > div.list.p" +
         [i] +
@@ -121,12 +121,11 @@ app.use('/sonuclar', (req, res) => {
     }
     //#endregion migros
     //---------------------------------------------------------------------------------------------------------------
-    //#region carefour 2
+    //#region carefour
   const urlElems2 = $2(
     "body > main > div:nth-child(8) > div:nth-child(2) > div.col-xs-12.col-sm-12.col-md-9.col-lg-10 > div.pl-grid-cont.row > ul>li > div"
   );
-var urlE2L=urlElems2.length;
-  for (let i = 1; i <= urlE2L.length; i++) {
+  for (let i = 1; i <= urlElems2.length; i++) {
     search2 = $2(
       "body > main > div:nth-child(8) > div:nth-child(2) > div.col-xs-12.col-sm-12.col-md-9.col-lg-10 > div.pl-grid-cont.row > ul > li:nth-child(" +
         [i] +
@@ -167,13 +166,12 @@ var urlE2L=urlElems2.length;
   }
   //#endregion
     //---------------------------------------------------------------------------------------------------------------
-    //#region A101 3
+    //#region A101
 
 const urlElems3 = $3(
   "body > div.js-main-wrapper > div.page-list.js-container > div:nth-child(3) > div.content > div > div.col-md-10.col-sm-9 > div> div > div >div"
 );
-var urlE3L=urlElems3.length;
-for (let i = 1; i <= urlE3L; i++) {
+for (let i = 1; i <= urlElems3.length; i++) {
   search3 = $3(
     "body > div.js-main-wrapper > div.page-list.js-container > div:nth-child(3) > div.content > div > div.col-md-10.col-sm-9 > div > div > div > div:nth-child(" +
     [i] +
@@ -221,8 +219,8 @@ for (let i = 1; i <= urlE3L; i++) {
 const urlElems5 = $5(
   "#product-grid-list > div.panel-body > div> div"
 );
-var urlE5L=urlElems5.length;
-for (let i = 1; i <= urlE5L; i++) {
+
+for (let i = 1; i <= urlElems5.length; i++) {
   search5 = $5(
     "#product-grid-list > div.panel-body > div > div:nth-child(" +
     [i] +
@@ -267,13 +265,12 @@ for (let i = 1; i <= urlE5L; i++) {
 }
 //#endregion
     //---------------------------------------------------------------------------------------------------------------
-    //#region bim aktuel 4
+    //#region bim aktuel
 
  const urlElems4 = $4(
   "#form1 > div:nth-child(11) > div > div.container.content.white.no-pb > div>div"
 );
-var urlE4L=urlElems4.length;
-for (let i = 1; i <= urlE4L; i++) {
+for (let i = 1; i <= urlElems4.length; i++) {
   search4 = $4(
     "#form1 > div:nth-child(11) > div > div.container.content.white.no-pb > div > div:nth-child(" +
     [i] +
