@@ -13,6 +13,13 @@
 </head>
 
 <body>
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+          <img src="/img/logo.PNG" width="30" height="30" class="d-inline-block align-top" alt="">
+          Market Bul
+        </a>
+      </nav>
+
   <div class="container-fluid">
     <div class="row">
       <div class="col-xs-6 col-md-6 col-lg-6 p-3">
@@ -46,7 +53,8 @@
       var elem = document.createElement('img')
       document.getElementById("sirali_sepet").appendChild(elem);
       elem.setAttribute('src',sepet[i].logo);
-      document.getElementById("sirali_sepet").innerHTML += sepet[i].site + ' - ' + sepet[i].name + ' - ' + sepet[i].Price + ' TL'+'<br>';
+      document.getElementById("sirali_sepet").innerHTML += sepet[i].site + ' - ' + sepet[i].name + ' - ' + sepet[i].Price + ' TL'+'<br>'+'<hr>';
+      
     }
     /*  
     sessionStorage.setItem('sepetTmp', sessionStorage.getItem('sepetTmp') + '<br>' + sepet[0].site + ' - ' + sepet[0].name + ' - ' + sepet[0].Price + ' TL');
