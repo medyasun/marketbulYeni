@@ -51,7 +51,7 @@ app.use('/sonuclar', (req, res) => {
     aramaSplit=arama.split(' ');
     var aramaLength=aramaSplit.length;
     var urlarama = urlify(arama);
-    const url = "https://www.migros.com.tr/arama?q="+urlarama+"&sirala=once-en-dusuk-fiyat";
+    const url = "https://www.migros.com.tr/arama?q="+urlarama;
     const url2 ="https://www.carrefoursa.com/tr/search/?sort=relevance&sortingOption=relevance&q="+urlarama+"%3Aprice-asc%3AinStockFlag%3Atrue#";
     const url3 ="https://www.a101.com.tr/list/?search_text="+urlarama+"#/";
     const url4 ="https://www.bim.com.tr/Categories/100/aktuel-urunler.aspx";
